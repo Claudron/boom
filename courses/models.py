@@ -2,6 +2,7 @@ from django.db import models
 from wagtail.core.models import Page
 from wagtail.admin.edit_handlers import FieldPanel, PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from django.core.exceptions import ValidationError
 
 # # Use Wagtail Page classes or models.Model ?
 #
@@ -16,6 +17,11 @@ class CourseListPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('subtitle'),
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['courses'] = CoursePage.objects.live().public()
+        return context
 
 
 class CoursePage(Page):
@@ -52,6 +58,34 @@ class CoursePage(Page):
         FieldPanel("button_text"),
         ImageChooserPanel("course_image"),
     ]
+
+
+    #if fields for inner and outer page are filled out raise error
+
+
+    def clean(self):
+        super().clean()
+
+        if self.internal_page and self.external_page:
+            #Both fields are filled out
+            raise ValidationError({
+                'internal_page': ValidationError("Please only select a page OR enter an external URL"),
+                'external_page': ValidationError("Please only select a page OR enter an external URL")
+            })
+
+        if not self.internal_page and not self.external_page:
+            #if there is no field filled out
+            raise ValidationError({
+                'internal_page': ValidationError("You must always select a page OR enter an external URL"),
+                'external_page': ValidationError("You must always select a page OR enter an external URL")
+            })
+
+
+
+
+
+
+
 # # The Course is made of Lessons
 #     course_content = Lesson
 #
