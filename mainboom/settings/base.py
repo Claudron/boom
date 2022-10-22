@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'courses',
     'flex',
     'testimonials',
+    'streams',
 
 
     'wagtail.contrib.forms',
