@@ -40,6 +40,7 @@ class HomePage(Page):
     # Stream fields are stored in Jason format in the database
     body = StreamField([
         ("Title", blocks.TitleBlock()),
+        ("cards", blocks.CardsBlock()),
     ], null=True, blank=True)
 
     content_panels = Page.content_panels + [
