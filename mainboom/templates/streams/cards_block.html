@@ -1,7 +1,7 @@
 {% load wagtailimages_tags %}
 
 
-<!-- loop through the cards object in class CardsBlock(blocks.StructBlock): in blocks.py-->
+<!-- looping  through the cards object in class CardsBlock(blocks.StructBlock): in blocks.py-->
 
 {% for card in self.cards %}
   {% image card.image fill-570x370 as img %}
@@ -11,5 +11,11 @@
   {% if card.text %}
     <p>{{ card.text }}</p>
   {% endif %}
+
+
+  <a href="{% if card.link.internal_page %}{{ card.link.internal_page.url }}
+  {% elif card.link.external_link %}{{ card.link.external_link }}{% endif %}">
+    {{ card.link.link_text }}
+  </a>
 
 {% endfor %}
