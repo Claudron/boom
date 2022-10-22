@@ -28,10 +28,12 @@ INSTALLED_APPS = [
     'search',
     'courses',
     'flex',
+    'testimonials',
 
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
+    'wagtail.contrib.modeladmin',
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
