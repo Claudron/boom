@@ -1,5 +1,10 @@
+from django import forms
+from wagtail.core.blocks.struct_block import StructBlockValidationError
+from django.forms.utils import ErrorList
+
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.contrib.table_block.blocks import TableBlock
 
 # this file is like a models.py file just with a different name
 
@@ -17,6 +22,19 @@ class TitleBlock(blocks.StructBlock):
         help_text = "Centered text to display on the page"
 
 
+class LinkValue(blocks.StructValue):
+    """Additional Value for our Links"""
+
+    def url(self) -> str:
+        internal_page = self.get("internal_page")
+        external_link = self.get("external_link")
+        if internal_page:
+            return internal_page.url
+        elif external_link:
+            return external_link
+        return ""
+
+
 class Link(blocks.StructBlock):
 
     link_text = blocks.CharBlock(max_length=50,
@@ -26,6 +44,26 @@ class Link(blocks.StructBlock):
                                             )
     external_link = blocks.URLBlock(required=False,
                                     )
+
+    class Meta:
+        value_class = LinkValue
+
+    def clean(self, value):
+        internal_page = value.get("internal_page")
+        external_link = value.get("external_link")
+        errors = {}
+        if internal_page and external_link:
+            errors["internal_page"] = ErrorList(["Both of these fields cannot be filled. Please select or enter only one option."])
+            errors["external_link"] = ErrorList(["Both of these fields cannot be filled. Please select or enter only one option."])
+        elif not internal_page and not external_link:
+            errors["internal_page"] = ErrorList(["Please select a page or enter a URL for one of these options."])
+            errors["external_link"] = ErrorList(["Please select a page or enter a URL for one of these options."])
+
+        if errors:
+            raise StructBlockValidationError(errors)
+            # raise StructBlockValidationError("Validation error in your Link", params=errors)
+
+        return super().clean(value)
 
 
 class Card(blocks.StructBlock):
@@ -44,7 +82,6 @@ class Card(blocks.StructBlock):
                 )
 
 
-
 class CardsBlock(blocks.StructBlock):
 
     cards = blocks.ListBlock(
@@ -57,4 +94,50 @@ class CardsBlock(blocks.StructBlock):
         label = "Standard Cards"
 
 
+class RadioSelectBlock(blocks.ChoiceBlock):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.field.widget = forms.RadioSelect(
+            choices=self.field.widget.choices
+        )
 
+
+class ImageAndTextBlock(blocks.StructBlock):
+    image = ImageChooserBlock(help_text='Image is automatically cropped to 786px by 552px')
+    image_alignment = RadioSelectBlock(
+        choices=(
+            ("left", "Image to the left"),
+            ("right", "Image to the right"),
+        ),
+        default='left',
+        help_text='Image on the left with text on the right. Or image on the right with text on the left.'
+    )
+    title = blocks.CharBlock(max_lengh=60, help_text='Max length of characters.')
+    text = blocks.CharBlock(max_length=140, required=False)
+    link = Link()
+
+    class Meta:
+        template = "streams/image_and_text_block.html"
+        icon = "image"
+        label = "Image & Text"
+
+
+class CallToActionBlock(blocks.StructBlock):
+
+    title = blocks.CharBlock(max_length=200, help_text='Max length of 200 characters.')
+    link = Link()
+
+    class Meta:
+        template = "streams/call_to_action_block.html"
+        icon = "plus"
+        label = "Call to Action"
+
+
+class PricingTableBlock(TableBlock):
+    """Pricing table block."""
+
+    class Meta:
+        template = "streams/pricing_table_block.html"
+        label = "Pricing Table"
+        icon = "table"
+        help_text = "Your pricing tables should always have 4 columns"

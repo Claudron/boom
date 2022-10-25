@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 
 
 class CourseListPage(Page):
+    parent_page_types = ["home.HomePage"]
     subtitle = models.TextField(
         blank=True,
         max_length=500,
@@ -25,6 +26,7 @@ class CourseListPage(Page):
 
 
 class CoursePage(Page):
+    parent_page_types = ["courses.CourseListPage"]
     description = models.CharField(
         blank=True,
         max_length=500,
