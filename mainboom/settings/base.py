@@ -111,9 +111,9 @@ DATABASES = {
         'NAME': 'boomdb',
         'USER': 'boomdb_user',
         'PASSWORD': 'CiFUt0yuQWy8jqyvWPkkhj0kbdULDgBB',
-        'HOST': 'CiFUt0yuQWy8jqyvWPkkhj0kbdULDgBB@dpg-cdal3782i3mnn0sl04o0-a.frankfurt-postgres.render.com',
+        'HOST': 'CiFUt0yuQWy8jqyvWPkkhj0kbdULDgBB@dpg-cdal3782i3mnn0sl04o0-a/boomdb',
         'PORT': '5432',
-        'OPTIONS': {'sslmode': 'require'},
+        #'OPTIONS': {'sslmode': 'require'},
     }
 }
 
