@@ -66,7 +66,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
@@ -104,27 +103,6 @@ DATABASES = {
     }
 }
 
-# postgres://boomdb_user:CiFUt0yuQWy8jqyvWPkkhj0kbdULDgBB@dpg-cdal3782i3mnn0sl04o0-a.frankfurt-postgres.render.com/boomdb
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'boomdb',
-#         'USER': 'boomdb_user',
-#         'PASSWORD': 'CiFUt0yuQWy8jqyvWPkkhj0kbdULDgBB',
-#         'HOST': 'CiFUt0yuQWy8jqyvWPkkhj0kbdULDgBB@dpg-cdal3782i3mnn0sl04o0-a.frankfurt-postgres.render.com',
-#         'PORT': '5432',
-#         #'OPTIONS': {'sslmode': 'require'},
-#     }
-# }
-
-
-
-
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
