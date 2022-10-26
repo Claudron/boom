@@ -11,6 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mainboom.settings.dev")
+if "RENDER" in os.environ:
+    os.environ["DJANGO_SETTINGS_MODULE"] = "mainboom.settings.production"
+else:
+    os.environ["DJANGO_SETTINGS_MODULE"] = "mainboom.settings.dev"
+
 
 application = get_wsgi_application()
