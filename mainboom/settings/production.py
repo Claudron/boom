@@ -43,3 +43,8 @@ sentry_sdk.init(
     send_default_pii=True
 )
 
+try:
+    from .local import *
+except ImportError:
+    pass
+
