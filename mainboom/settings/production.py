@@ -5,7 +5,7 @@ import dj_database_url
 DEBUG = 'RENDER' not in os.environ
 
 SECRET_KEY = os.environ["SECRET_KEY"]
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', 'boom.onrender.com']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
