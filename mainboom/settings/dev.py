@@ -1,5 +1,9 @@
 from .base import *
 
+raise RuntimeError("I am the DEV error message!")
+
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

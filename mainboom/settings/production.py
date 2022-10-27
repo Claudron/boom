@@ -2,6 +2,8 @@ import os
 from .base import *
 import dj_database_url
 
+raise RuntimeError("I am the PRODUCTION error message!")
+
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
