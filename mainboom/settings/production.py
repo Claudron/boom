@@ -4,14 +4,15 @@ import dj_database_url
 
 DEBUG = 'RENDER' not in os.environ
 
+ALLOWED_HOSTS = []
+
+
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-
-ALLOWED_HOSTS = []
 
 
 DATABASES = {
