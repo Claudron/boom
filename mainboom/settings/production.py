@@ -2,10 +2,10 @@ import os
 from .base import *
 import dj_database_url
 
-DEBUG = False
+DEBUG = 'RENDER' not in os.environ
 
 SECRET_KEY = os.environ["SECRET_KEY"]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
