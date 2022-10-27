@@ -2,14 +2,14 @@ import os
 from .base import *
 import dj_database_url
 
-raise RuntimeError("I am the PRODUCTION error message!")
+# raise RuntimeError("I am the PRODUCTION error message!")
 
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
 
 
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
@@ -23,6 +23,25 @@ DATABASES = {
         conn_max_age=600
     )
 }
+
+MIDDLEWARE += [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+]
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+# This setting tells Django at which URL static files are going to be served to the user.
+# Here, they will be accessible at your-domain.onrender.com/static/...
+STATIC_URL = '/static/'
+# Following settings only make sense on production and may break development environments.
+if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version, so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
