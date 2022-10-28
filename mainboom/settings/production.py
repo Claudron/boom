@@ -17,12 +17,22 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ["DATABASE_URL"],
+#         conn_max_age=600
+#     )
+# }
+
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ["DATABASE_URL"],
+        # Feel free to alter this value to suit your needs.
+        default='postgres://boomdb_s4xb_user:7CnQAw32l8FimteWs80TwkkvmqnPykuG@dpg-cddut9aen0hmkd8nfbt0-a/boomdb_s4xb',
         conn_max_age=600
-    )
-}
+
+        )}
+
 
 MIDDLEWARE += [
     'whitenoise.middleware.WhiteNoiseMiddleware',
