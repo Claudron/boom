@@ -19,7 +19,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ["DATABASE_URL"],
+        default='postgresql://postgres:postgres@localhost/postgres',
         conn_max_age=600
     )
 }
