@@ -5,11 +5,17 @@ import dj_database_url
 #raise RuntimeError("I am the PRODUCTION error message!")
 
 DEBUG = 'RENDER' not in os.environ
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+cwd = os.getcwd()
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": f"{cwd}/.cache"
+    }
+}
+
 
 ALLOWED_HOSTS = []
-
-
-SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
