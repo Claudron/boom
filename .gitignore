@@ -1,5 +1,6 @@
 *.swp
 *.pyc
+.env
 .DS_Store
 /.coverage
 /dist/
