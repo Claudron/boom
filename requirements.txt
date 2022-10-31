@@ -1,5 +1,5 @@
-Django>=3.2,<3.3
-wagtail>=2.15,<2.16
+Django
+wagtail
 psycopg2-binary
 django-extensions
 dj-database-url
