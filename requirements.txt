@@ -1,7 +1,10 @@
-Django
-wagtail
+Django>=3.2,<3.3
+wagtail>=2.15,<2.16
 psycopg2-binary
 django-extensions
 dj-database-url
 sentry-sdk
 whitenoise[brotli]
+python-dotenv
+#   Exact version as proposed by Wagtail Dockerfile. No idea if it is needed.
+gunicorn

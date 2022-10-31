@@ -2,22 +2,14 @@ import os
 from .base import *
 import dj_database_url
 
-#raise RuntimeError("I am the PRODUCTION error message!")
 
 DEBUG = 'RENDER' not in os.environ
-SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
-cwd = os.getcwd()
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": f"{cwd}/.cache"
-    }
-}
 
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost"]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -25,50 +17,10 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/boom',
+        default=os.environ["DATABASE_URL"],
         conn_max_age=600
     )
 }
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#     },
-#     'root': {
-#         'handlers': ['console'],
-#         'level': 'WARNING',
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console'],
-#             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-#             'propagate': False,
-#         },
-#     },
-# }
-
-
-# MIDDLEWARE += [
-#     'whitenoise.middleware.WhiteNoiseMiddleware',
-# ]
-#
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/3.0/howto/static-files/
-#
-# # This setting tells Django at which URL static files are going to be served to the user.
-# # Here, they will be accessible at your-domain.onrender.com/static/...
-# STATIC_URL = '/static/'
-# # Following settings only make sense on production and may break development environments.
-# if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
-#     # in your application directory on Render.
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#     # Turn on WhiteNoise storage backend that takes care of compressing static files
-#     # and creating unique names for each version, so they can safely be cached forever.
-#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 import sentry_sdk
@@ -89,9 +41,4 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
-
-try:
-    from .local import *
-except ImportError:
-    pass
 
