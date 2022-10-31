@@ -6,3 +6,5 @@ dj-database-url
 sentry-sdk
 whitenoise[brotli]
 python-dotenv
+#   Exact version as proposed by Wagtail Dockerfile. No idea if it is needed.
+gunicorn==20.0.4
