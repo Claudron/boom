@@ -19,6 +19,19 @@ DATABASES = {
     )
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': os.environ.get("LOG_LEVEL", "WARNING").upper(),
+    },
+}
 
 #   Check if SENTRY_DSN is set. If yes, import sentry modules and set
 #   everything up. If not, just run without sentry.
