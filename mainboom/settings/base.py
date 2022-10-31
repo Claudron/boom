@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-DEBUG = os.environ.get("DEBUG","").lower() == "true" or 'RENDER' not in os.environ
+DEBUG = True #os.environ.get("DEBUG","").lower() == "true" or 'RENDER' not in os.environ
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -95,16 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mainboom.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -120,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
